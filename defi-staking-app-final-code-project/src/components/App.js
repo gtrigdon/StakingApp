@@ -25,35 +25,38 @@ class App extends Component {
 
     //LOAD Tether TOKEN
     const tetherTokenData = Tether.networks[networkId]
+    console.log(tetherTokenData)
     if (tetherTokenData) {
       const tether = new web3.eth.Contract(Tether.abi, tetherTokenData.address)
       this.setState({ tether })
       let tetherTokenBalance = await tether.methods.balanceOf(this.state.account).call()
       this.setState({ tetherTokenBalance: tetherTokenBalance.toString() })
     } else {
-      window.alert("tether contract not deployed to detect network")
+      window.alert("Tether Token contract not deployed to detected network")
     }
 
     //LOAD Reward TOKEN
     const rewardTokenData = Reward.networks[networkId]
+    console.log(rewardTokenData)
     if (rewardTokenData) {
       const reward = new web3.eth.Contract(Reward.abi, rewardTokenData.address)
       this.setState({ reward })
       let rewardTokenBalance = await reward.methods.balanceOf(this.state.account).call()
       this.setState({ rewardTokenBalance: rewardTokenBalance.toString() })
     } else {
-      window.alert("Reward Token contract not deployed to detect network")
+      window.alert("Reward Token contract not deployed to detected network")
     }
 
     //Load DecentralBank
     const decentralBankData = DecentralBank.networks[networkId]
+    console.log(decentralBankData)
     if (decentralBankData) {
       const decentralBank = new web3.eth.Contract(DecentralBank.abi, decentralBankData.address)
       this.setState({ decentralBank })
       let stakingBalance = await decentralBank.methods.stakingBalance(this.state.account).call()
       this.setState({ stakingBalance: stakingBalance.toString() })
     } else {
-      window.alert("TokenForm contract not deployed to detect network")
+      window.alert([decentralBankData, networkId, "Bank contract not deployed to detected network"])
     }
 
     this.setState({ loading: false })
